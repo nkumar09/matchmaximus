@@ -2,6 +2,7 @@ import os
 import json
 from datetime import datetime
 from agents.bio_writer_agent import BioWriterAgent
+from agents.photo_selector_agent import PhotoSelectorAgent
 
 def run_profile_generation():
     print("🔧 Initializing BioWriterAgent...")
@@ -14,8 +15,19 @@ def run_profile_generation():
     print("--------------------------------")
     print(bio)
     print("--------------------------------")
-
     save_bio_version(bio)
+
+    print("\n📸 Running PhotoSelectorAgent...")
+    photo_agent = PhotoSelectorAgent()
+    best_images = photo_agent.select_best_images()
+
+    if best_images:
+        print("\n✅ Top Selected Images:")
+        for img, score in best_images:
+            print(f"{img} → Score: {score}")
+        photo_agent.save_selected_images(best_images)
+    else:
+        print("⚠️ No suitable images found.")
 
 def save_bio_version(bio_text: str):
     version_dir = "data/profile_versions"
