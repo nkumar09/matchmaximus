@@ -1,4 +1,4 @@
-#photo_selector_agent
+#photo_selector_agent_v3.py
 import os
 import json
 from datetime import datetime
@@ -47,7 +47,44 @@ class PhotoSelectorAgent:
 
     # ---------- Public API -------------------------------------------------- #
 
-    def select_best_images(self, max_images: int = 6):
+    # def select_best_images(self, max_images: int = 6):
+    #     if not os.path.exists(self.image_dir):
+    #         print(f"⚠️  Image directory '{self.image_dir}' not found.")
+    #         return []
+
+    #     image_files = [
+    #         f
+    #         for f in os.listdir(self.image_dir)
+    #         if f.lower().endswith((".jpg", ".jpeg", ".png"))
+    #     ][: max_images]
+
+    #     if not image_files:
+    #         print("⚠️  No image files found.")
+    #         return []
+
+    #     loop = asyncio.get_event_loop()
+    #     executor = ThreadPoolExecutor()
+
+    #     async def run_async(f):  # helper
+    #         return await loop.run_in_executor(executor, self._process_single_image, f)
+
+    #     results = loop.run_until_complete(
+    #         asyncio.gather(*(run_async(f) for f in image_files))
+    #     )
+    #     results = [r for r in results if r]
+    #     results.sort(key=lambda r: r["score"], reverse=True)
+
+    #     # Pretty print
+    #     print("\n✅ Top Selected Images:")
+    #     for r in results:
+    #         print(f"{r['filename']} → Score: {r['score']}")
+    #         print(f"   🖼️  {r['caption']}")
+    #         for tip in r["tips"]:
+    #             print(f"   💡 {tip}")
+
+    #     return results
+
+    async def select_best_images(self, max_images: int = 6):
         if not os.path.exists(self.image_dir):
             print(f"⚠️  Image directory '{self.image_dir}' not found.")
             return []
@@ -56,25 +93,22 @@ class PhotoSelectorAgent:
             f
             for f in os.listdir(self.image_dir)
             if f.lower().endswith((".jpg", ".jpeg", ".png"))
-        ][: max_images]
+        ][:max_images]
 
         if not image_files:
             print("⚠️  No image files found.")
             return []
 
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         executor = ThreadPoolExecutor()
 
-        async def run_async(f):  # helper
+        async def run_async(f):
             return await loop.run_in_executor(executor, self._process_single_image, f)
 
-        results = loop.run_until_complete(
-            asyncio.gather(*(run_async(f) for f in image_files))
-        )
+        results = await asyncio.gather(*(run_async(f) for f in image_files))
         results = [r for r in results if r]
         results.sort(key=lambda r: r["score"], reverse=True)
 
-        # Pretty print
         print("\n✅ Top Selected Images:")
         for r in results:
             print(f"{r['filename']} → Score: {r['score']}")
