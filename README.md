@@ -1,4 +1,4 @@
-# MatchMaxima
+# MatchMaximus
 
 > **One-liner**: *A multi-agent AI system that crafts, tests, and iterates dating profiles to maximize your matches across modern dating apps.*
 
@@ -6,14 +6,14 @@
 
 ## 1. Project Purpose
 
-MatchMaxima leverages **CrewAI** agents combined with OpenAI models and lightweight vision tools to generate engaging bios, pick the best photos, optimize everything per platform rules, and learn from real-world feedback.
+MatchMaximus leverages **CrewAI** agents combined with OpenAI models and lightweight vision tools to generate engaging bios, pick the best photos, optimize everything per platform rules, and learn from real-world feedback.
 
 ---
 
 ## 2. High-Level Architecture
 
 ```
-/MatchMaxima
+/MatchMaximus
 ├── agents/
 │   ├── bio_writer_agent.py            # Generates initial bios
 │   ├── tone_style_agent.py            # Adjusts tone to user preference
@@ -65,7 +65,7 @@ pip install torch torchvision pillow scikit-learn
 ```bash
 # 1 — create base folder
 cd /Users/nischaykumar/Documents/AIAgent
-mkdir MatchMaxima && cd MatchMaxima
+mkdir MatchMaximus && cd MatchMaximus
 
 # 2 — virtual environment
 python3 -m venv venv && source venv/bin/activate
