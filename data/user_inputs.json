@@ -1,16 +1,1 @@
-{
-  "name": "Nischay",
-  "age": 28,
-  "gender": "male",
-  "location": "Bengaluru",
-  "interests": ["traveling", "reading", "cooking", "cafe hoping"],
-  "personality_traits": ["sarcastic", "logical", "empathetic"],
-  "goal": "Looking for a genuine connection with someone who enjoys both deep conversations and lighthearted fun.",
-  "preferred_tone": "witty",
-  "platform": "Hinge",
-  "max_bio_length": 500,
-  "profile_style": {
-    "bio_format": "short_paragraph",
-    "image_style": "natural, candid, smiling"
-  }
-}
+{"name": "Nischay", "age": 28, "location": "Bengaluru", "interests": ["reading", "coffee", "travel"], "personality_traits": ["witty", "curious", "thoughtful"], "goal": "find a meaningful connection", "preferred_tone": "witty", "platform": "Hinge", "max_bio_length": 300}

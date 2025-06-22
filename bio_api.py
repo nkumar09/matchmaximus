@@ -1,5 +1,5 @@
 #bio_api.py
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Form, UploadFile, File
 from pydantic import BaseModel
 from agents.bio_writer_agent import BioWriterAgent
 import uvicorn
@@ -100,7 +100,6 @@ def optimize_bio(input_data: PlatformOptimizeInput):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-from fastapi import UploadFile, File
 from typing import List
 import shutil
 from agents.photo_selector_agent_v3 import PhotoSelectorAgent
@@ -146,8 +145,6 @@ async def select_photos(files: List[UploadFile] = File(...)):
             except Exception as e:
                 print(f"⚠️  Cleanup failed for {file_path}: {e}")
 
-from fastapi import Form, UploadFile, File
-from typing import List
 from agents.bio_writer_agent import BioWriterAgent
 from agents.tone_style_agent import ToneStyleAgent
 from agents.platform_optimizer_agent import PlatformOptimizerAgent
@@ -254,7 +251,7 @@ async def generate_complete_profile(
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
+    
 if __name__ == "__main__":
     uvicorn.run("bio_api:app", host="0.0.0.0", port=8000, reload=True)
 
