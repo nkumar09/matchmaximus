@@ -5,6 +5,7 @@ from agents.bio_writer_agent import BioWriterAgent
 from agents.tone_style_agent import ToneStyleAgent
 from agents.photo_selector_agent_v2 import PhotoSelectorAgent
 from agents.platform_optimizer_agent import PlatformOptimizerAgent
+from tools.storage_helper import get_version_folder
 
 def run_profile_generation():
     print("🔧 Initializing BioWriterAgent...")
@@ -45,7 +46,7 @@ def run_profile_generation():
         print("⚠️ No suitable images found.")
 
 def save_bio_version(bio_text: str):
-    version_dir = "data/profile_versions"
+    version_dir = get_version_folder()
     os.makedirs(version_dir, exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -62,7 +63,7 @@ def save_bio_version(bio_text: str):
     print(f"\n💾 Bio saved to {filename}")
 
 def save_platform_bio_version(bio_text: str):
-    version_dir = "data/profile_versions"
+    version_dir = get_version_folder()
     os.makedirs(version_dir, exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

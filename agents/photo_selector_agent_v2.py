@@ -5,6 +5,7 @@ from PIL import Image
 from transformers import CLIPProcessor, CLIPModel
 import torch
 from tools.image_optim_tool import optimize_image
+from tools.storage_helper import get_version_folder
 
 class PhotoSelectorAgent:
     def __init__(self, image_dir='data/images'):
@@ -95,7 +96,7 @@ class PhotoSelectorAgent:
         return results[:top_k]
 
     def save_selected_images(self, selected_images):
-        version_dir = "data/profile_versions"
+        version_dir = get_version_folder()
         os.makedirs(version_dir, exist_ok=True)
 
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

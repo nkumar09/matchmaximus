@@ -2,6 +2,7 @@ import os
 import json
 from datetime import datetime
 from agents.analytics_agent import AnalyticsAgent
+from tools.storage_helper import get_version_folder
 
 def run_feedback_analysis():
     print("\n🔁 Running Optimization Feedback Loop...")
@@ -28,7 +29,7 @@ def run_feedback_analysis():
     save_feedback_summary(platform, swipes, matches, engagement_score, suggestions)
 
 def save_feedback_summary(platform, swipes, matches, engagement_score, suggestions):
-    version_dir = "data/profile_versions"
+    version_dir = get_version_folder()
     os.makedirs(version_dir, exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
