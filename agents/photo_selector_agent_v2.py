@@ -1,3 +1,4 @@
+#photo_selector_agent.py
 import os
 import json
 from datetime import datetime
@@ -40,7 +41,7 @@ class PhotoSelectorAgent:
             "natural and confident expression": "Look relaxed and confident, not posed."
         }
 
-    def select_best_images(self, top_k=3):
+    def select_best_images(self, max_images=6):
         if not os.path.exists(self.image_dir):
             print(f"⚠️ Image directory '{self.image_dir}' not found.")
             return []
@@ -48,7 +49,7 @@ class PhotoSelectorAgent:
         image_files = [
             f for f in os.listdir(self.image_dir)
             if f.lower().endswith(('.jpg', '.jpeg', '.png'))
-        ]
+        ][:max_images]  # Cap at 6 images
 
         if not image_files:
             print("⚠️ No image files found.")
@@ -75,7 +76,6 @@ class PhotoSelectorAgent:
                 top_k_values = torch.topk(probs, k=3)
                 top_score = top_k_values.values.mean().item()
 
-                # Scale and round to nearest 0.5
                 raw_score = min(top_score * 12.5, 10)
                 score = round(raw_score * 2) / 2  # nearest 0.5
 
@@ -89,11 +89,12 @@ class PhotoSelectorAgent:
                     "reasons": reasons,
                     "tips": tips
                 })
+
             except Exception as e:
                 print(f"❌ Error processing {img_file}: {e}")
 
         results.sort(key=lambda x: x["score"], reverse=True)
-        return results[:top_k]
+        return results
 
     def save_selected_images(self, selected_images):
         version_dir = get_version_folder()
