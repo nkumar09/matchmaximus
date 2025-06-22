@@ -1,33 +1,31 @@
-MatchMaxima
+# MatchMaxima
 
-One-liner: A multi-agent AI system that crafts, tests, and iterates dating profiles to maximize your matches across modern dating apps.
+> **One-liner**: *A multi-agent AI system that crafts, tests, and iterates dating profiles to maximize your matches across modern dating apps.*
 
 ---
-<pre>
+
 ## 1. Project Purpose
-<code>
-MatchMaxima leverages CrewAI agents combined with OpenAI models and lightweight vision tools to generate engaging bios, pick the best photos, optimize everything per platform rules, and learn from real-world feedback.
-</code>
-</pre>
+
+MatchMaxima leverages **CrewAI** agents combined with OpenAI models and lightweight vision tools to generate engaging bios, pick the best photos, optimize everything per platform rules, and learn from real-world feedback.
+
 ---
 
-<pre>
 ## 2. High-Level Architecture
 
-<code>
+```
 /MatchMaxima
 ├── agents/
-│   ├── bio_writer_agent.py          # Generates initial bios
-│   ├── tone_style_agent.py         # Adjusts tone to user preference
-│   ├── platform_optimizer_agent.py # Fits bios to app-specific limits
-│   ├── photo_selector_agent.py     # Ranks photos heuristically
-│   └── analytics_agent.py          # Reads swipe/match stats
+│   ├── bio_writer_agent.py            # Generates initial bios
+│   ├── tone_style_agent.py            # Adjusts tone to user preference
+│   ├── platform_optimizer_agent.py    # Fits bios to app-specific limits
+│   ├── photo_selector_agent.py        # Ranks photos heuristically
+│   └── analytics_agent.py             # Reads swipe/match stats
 ├── tools/
-│   └── tone_analysis_tool.py       # Detects tone via OpenAI
+│   └── tone_analysis_tool.py          # Detects tone via OpenAI
 ├── workflows/
-│   ├── profile_generation_workflow.py   # Full generation pipeline
-│   ├── optimization_feedback_loop.py    # Performance feedback loop
-│   └── ab_testing_workflow.py           # A/B test bio variants
+│   ├── profile_generation_workflow.py # Full generation pipeline
+│   ├── optimization_feedback_loop.py  # Performance feedback loop
+│   └── ab_testing_workflow.py         # A/B test bio variants
 ├── data/
 │   ├── user_inputs.json
 │   ├── platform_metadata.json
@@ -38,91 +36,94 @@ MatchMaxima leverages CrewAI agents combined with OpenAI models and lightweight 
 ├── config/
 ├── main.py
 └── README.md
-</code>
-</pre>
----
-<pre>
-## 3. Prerequisites
-<code>
-Requirement	Version
-Python	≥ 3.9
-macOS/Linux	Tested on macOS 15
-OpenAI API	Valid key in .env
+```
 
-# Core libraries
+> 🔒 *The above structure is locked. Rename nothing; add only if necessary.*
+
+---
+
+## 3. Prerequisites
+
+| Requirement   | Version                |
+|---------------|------------------------|
+| Python        | ≥ 3.9                  |
+| macOS/Linux   | Tested on macOS 15     |
+| OpenAI API    | Valid key in `.env`    |
+
+```bash
+# Core dependencies
 pip install crewai openai langchain langchain-core langchain-community python-dotenv
 
-# Vision / ML (optional for future photo scoring)
+# Optional: for future vision support
 pip install torch torchvision pillow scikit-learn
-</code>
-</pre>
+```
+
 ---
 
-<pre>
-##4. Quick Setup
+## 4. Quick Setup
 
-<code>
-# 1 — clone / navigate
+```bash
+# 1 — create base folder
 cd /Users/nischaykumar/Documents/AIAgent
 mkdir MatchMaxima && cd MatchMaxima
 
-# 2 — create venv
+# 2 — virtual environment
 python3 -m venv venv && source venv/bin/activate
 
-# 3 — lay out folders
-python - <<'PY'
-import os, pathlib
-folders=[
- "agents","tools","data","data/images","data/profile_versions",
- "workflows","prompts","config"]
-for f in folders: pathlib.Path(f).mkdir(parents=True, exist_ok=True)
-PY
+# 3 — folder layout
+mkdir -p agents tools data/images data/profile_versions workflows prompts config
 
-# 4 — copy / paste the code files from this repo
+# 4 — OpenAI key
+echo "OPENAI_API_KEY=your-key-here" > .env
+```
 
-# 5 — add your OpenAI key
-echo "OPENAI_API_KEY=sk-..." > .env
-</code>
-</pre>
 ---
 
-<pre>
 ## 5. Running Workflows
 
-<code>
-5.1 Generate a New Profile
+### 5.1 Generate a New Profile
 
-python main.py            # default runs profile_generation_workflow
+```bash
+python main.py  # runs profile_generation_workflow
+```
 
-Outputs:
-	•	Final platform-ready bio (console)
-	•	data/profile_versions/bio_<timestamp>.json
-	•	data/profile_versions/bio_platform_<timestamp>.json
-	•	data/profile_versions/photos_<timestamp>.json
+✅ Outputs:
+- Final platform-ready bio (console)
+- `data/profile_versions/bio_<timestamp>.json`
+- `data/profile_versions/bio_platform_<timestamp>.json`
+- `data/profile_versions/photos_<timestamp>.json`
 
-5.2 Analyse Performance Feedback
-
-# In main.py uncomment:
-# run_feedback_analysis()
-python main.py
-
-Generates feedback_<timestamp>.json with engagement score + suggestions.
-
-5.3 Run A/B Test
-
-# In main.py uncomment:
-# run_ab_test()
-python main.py
-
-Creates ab_test_<timestamp>.json holding Variant A & B bios + photos.
-</code>
-</pre>
 ---
 
-<pre>
+### 5.2 Analyze Performance Feedback
+
+```python
+# Uncomment in main.py:
+# run_feedback_analysis()
+python main.py
+```
+
+✅ Output:
+- `data/profile_versions/feedback_<timestamp>.json` with score & suggestions
+
+---
+
+### 5.3 Run A/B Test
+
+```python
+# Uncomment in main.py:
+# run_ab_test()
+python main.py
+```
+
+✅ Output:
+- `data/profile_versions/ab_test_<timestamp>.json` with Variant A and B profiles
+
+---
+
 ## 6. Data Flow Diagram
 
-<code>
+```mermaid
 graph TD
 A[User Inputs] -->|user_inputs.json| B(BioWriterAgent)
 B --> C(ToneStyleAgent)
@@ -134,46 +135,34 @@ E -->|Profile live| G[Dating App]
 G -->|Swipes/Matches| H[performance_feedback.json]
 H --> I(AnalyticsAgent)
 I -->|Suggestions| developer
-</code>
-</pre>
+```
+
 ---
 
-<pre>
-## 7. Customisation
+## 7. Customization
 
-<code>
-	•	Change tone: Edit preferred_tone in user_inputs.json (e.g., “witty”, “casual”).
-	•	Platform switch: Set platform + max_bio_length accordingly.
-	•	Add new agent: Place file in agents/, import into a workflow, and keep folder names intact.
-</code>
-</pre>
+- 🎨 **Change tone**: Update `preferred_tone` in `user_inputs.json` (e.g., `"witty"`, `"confident"`)
+- 🧠 **Change platform**: Update `"platform"` and `"max_bio_length"` in `user_inputs.json`
+- 🧩 **Add new agent**: Place it in `agents/`, connect it in a workflow, and follow naming style
+
 ---
 
-<pre>
-## 8. Contributing Guidelines
+## 8. Contribution Guidelines
 
-<code>
-	1.	Follow existing naming conventions.
-	2.	Never rename or delete locked folders/files.
-	3.	Commit readable, well-commented Python (PEP 8) – keep prompts human-like.
-	4.	Update this README if you add significant functionality.
-</code>
-</pre>
+- ✅ Use consistent folder structure — no renaming locked files
+- ✅ Write clean, documented Python (PEP8)
+- ✅ Keep prompts natural and human-like
+- ✅ If you add major features, update this README
+
 ---
 
-<pre>
 ## 9. License
 
-<code>
-MIT — see LICENSE (to add).
-</code>
-</pre>
+MIT — add a `LICENSE` file if needed.
+
 ---
 
-<pre>
 ## 10. Credits
-<code>
-	•	CrewAI for multi-agent orchestration
-	•	OpenAI GPT-4o for text generation and tone analysis
-</code>
-</pre>
+
+- 🤖 [CrewAI](https://github.com/joaomdmoura/crewAI) — Multi-agent framework
+- 🔮 OpenAI GPT-4o — Bio generation, tone analysis
