@@ -70,10 +70,13 @@ mkdir MatchMaxima && cd MatchMaxima
 # 2 — virtual environment
 python3 -m venv venv && source venv/bin/activate
 
-# 3 — folder layout
+# 3 — add necessary libraries
+pip install -r requirements.txt
+
+# 4 — folder layout
 mkdir -p agents tools data/images data/profile_versions workflows prompts config
 
-# 4 — OpenAI key
+# 5 — OpenAI key
 echo "OPENAI_API_KEY=your-key-here" > .env
 ```
 
