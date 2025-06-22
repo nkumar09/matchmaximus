@@ -15,10 +15,9 @@ class PlatformOptimizerAgent:
 
     def optimize_for_platform(self, bio: str) -> str:
         prompt = (
-            f"You're optimizing a dating profile bio for {self.platform}. "
-            f"Ensure the bio is engaging and feels natural, but under {self.max_length} characters. "
-            "Keep the tone casual and real. Don't use emojis unless already present. "
-            "Avoid sounding like an ad or too try-hard. Trim fluff. If it's already short and solid, return as-is.\n\n"
+            f"You're helping someone get better matches on {self.platform}. Take this dating bio and make sure it fits within {self.max_length} characters. "
+            "Keep it friendly, relaxed, and like something a real person would write—not too polished. "
+            "Only make small edits if needed. Avoid buzzwords or overly clever stuff. No emojis unless already present.\n\n"
             f"Bio:\n\"{bio}\""
         )
 

@@ -1,0 +1,14 @@
+{
+  "Tinder": {
+    "average_engagement_rate": 12.5,
+    "bio_limit": 500
+  },
+  "Bumble": {
+    "average_engagement_rate": 15.2,
+    "bio_limit": 300
+  },
+  "Hinge": {
+    "average_engagement_rate": 18.7,
+    "bio_limit": 150
+  }
+}

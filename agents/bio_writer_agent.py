@@ -21,11 +21,10 @@ class BioWriterAgent:
         preferred_tone = self.user_data.get("preferred_tone", "casual")
 
         prompt = (
-            f"Write a dating profile bio for {name}, a {self.user_data['age']}-year-old "
-            f"from {self.user_data['location']}. The bio should reflect these traits: {traits}, "
-            f"mention interests like {interests}, and align with the goal: '{goal}'. "
-            f"Keep the tone {preferred_tone}, and format it as a short, engaging paragraph "
-            f"under {self.user_data['max_bio_length']} characters."
+            f"Write a short dating bio for someone named {name}, who's {self.user_data['age']} years old and lives in {self.user_data['location']}. "
+            f"They're into {interests} and described as {traits}. The goal is: '{goal}'. "
+            f"Use a {preferred_tone} tone, and keep it under {self.user_data['max_bio_length']} characters. "
+            "It should sound real—not like it was written by AI or a copywriter. Keep it casual, clear, and friendly."
         )
 
         response = client.chat.completions.create(

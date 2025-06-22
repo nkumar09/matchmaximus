@@ -24,6 +24,7 @@
 # for img, score in results:
 #     print(f"{img} -> Score: {score}")
 
+
 # ## Test for Tone Style Agent
 # from agents.tone_style_agent import ToneStyleAgent
 
@@ -33,11 +34,19 @@
 
 # print("\n🎨 Final Bio with Adjusted Tone:\n", updated_bio)
 
+
+# ## Test for Platform Optimizer Agent
+# from agents.platform_optimizer_agent import PlatformOptimizerAgent
+
+# raw_bio = "Swipe right if you like deep convos, bad puns, and spontaneous midnight drives. No drama, just vibes."
+# agent = PlatformOptimizerAgent()
+# final_bio = agent.optimize_for_platform(raw_bio)
+
+# print("\n📱 Platform-Optimized Bio:\n", final_bio)
+
+
 ## Test for Platform Optimizer Agent
-from agents.platform_optimizer_agent import PlatformOptimizerAgent
+from agents.analytics_agent import AnalyticsAgent
 
-raw_bio = "Swipe right if you like deep convos, bad puns, and spontaneous midnight drives. No drama, just vibes."
-agent = PlatformOptimizerAgent()
-final_bio = agent.optimize_for_platform(raw_bio)
-
-print("\n📱 Platform-Optimized Bio:\n", final_bio)
+agent = AnalyticsAgent()
+agent.summarize()
