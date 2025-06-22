@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 from agents.bio_writer_agent import BioWriterAgent
 from agents.tone_style_agent import ToneStyleAgent
-from agents.photo_selector_agent_v2 import PhotoSelectorAgent
+from agents.photo_selector_agent_v3 import PhotoSelectorAgent
 from agents.platform_optimizer_agent import PlatformOptimizerAgent
 from tools.storage_helper import get_version_folder
 
@@ -37,10 +37,13 @@ def run_profile_generation():
     if best_images:
         print("\n✅ Top Selected Images:")
         for img_data in best_images:
-            print(f"{img_data['filename']} → Score: {img_data['score']}")
-            for reason, tip in zip(img_data["reasons"], img_data["tips"]):
-                print(f"   ✔ Reason: {reason}")
-                print(f"   💡 Tip: {tip}")
+            # print(f"{img_data['filename']} → Score: {img_data['score']}")
+            # for reason, tip in zip(img_data["reasons"], img_data["tips"]):
+            #     print(f"   ✔ Reason: {reason}")
+            #     print(f"   💡 Tip: {tip}")
+            print(f"🖼️ Caption: {img_data['caption']}")
+            for tip in img_data["tips"]:
+                print(f"💡 Tip: {tip}")
         photo_agent.save_selected_images(best_images)
     else:
         print("⚠️ No suitable images found.")

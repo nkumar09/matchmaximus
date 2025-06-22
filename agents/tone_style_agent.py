@@ -33,7 +33,7 @@ class ToneStyleAgent:
         )
 
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4.1",
             messages=[
                 {"role": "system", "content": "You're just a regular person helping a friend improve their dating bio."},
                 {"role": "user", "content": prompt}
