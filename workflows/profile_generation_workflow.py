@@ -6,6 +6,7 @@ from agents.tone_style_agent import ToneStyleAgent
 from agents.photo_selector_agent_v3 import PhotoSelectorAgent
 from agents.platform_optimizer_agent import PlatformOptimizerAgent
 from tools.storage_helper import get_version_folder
+import asyncio
 
 def run_profile_generation():
     print("🔧 Initializing BioWriterAgent...")
@@ -32,7 +33,7 @@ def run_profile_generation():
 
     print("\n📸 Running PhotoSelectorAgent...")
     photo_agent = PhotoSelectorAgent()
-    best_images = photo_agent.select_best_images()
+    best_images = asyncio.run(photo_agent.select_best_images())
 
     if best_images:
         print("\n✅ Top Selected Images:")
